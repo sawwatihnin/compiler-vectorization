@@ -1,0 +1,12 @@
+# Compiled programs
+vector_O0
+vector_O2
+vector_O3
+vectorized
+
+# Compiler output and temporary files
+*.s
+*.o
+*.out
+*~
+.DS_Store
