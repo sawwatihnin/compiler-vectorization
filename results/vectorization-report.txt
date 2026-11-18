@@ -1,0 +1,13 @@
+vectorization.c:6:5: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+    6 |     for (int i = 0; i < n; i++) {
+      |     ^
+vectorization.c:26:5: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+   26 |     for (int i = 0; i < n; i++) {
+      |     ^
+vectorization.c:6:5: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+    6 |     for (int i = 0; i < n; i++) {
+      |     ^
+vectorization.c:34:5: remark: loop not vectorized: could not determine number of loop iterations [-Rpass-analysis=loop-vectorize]
+   34 |     for (int i = 0; i < n; i++) {
+      |     ^
+vectorization.c:34:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]

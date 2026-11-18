@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Add corresponding elements from a and b into c. */
+/* Add each pair of values. */
 void add_arrays(float *a, float *b, float *c, int n) {
     for (int i = 0; i < n; i++) {
         c[i] = a[i] + b[i];
@@ -22,7 +22,7 @@ int main(void) {
         return 1;
     }
 
-    /* Initialize inputs with predictable values. */
+    /* Give the input arrays values to add. */
     for (int i = 0; i < n; i++) {
         a[i] = (float)i;
         b[i] = 2.0f * (float)i;
@@ -30,7 +30,7 @@ int main(void) {
 
     add_arrays(a, b, c, n);
 
-    /* Check every result so the computation has an observable purpose. */
+    /* Check that every answer is right. */
     for (int i = 0; i < n; i++) {
         float expected = 3.0f * (float)i;
         if (c[i] != expected) {

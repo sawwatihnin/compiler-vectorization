@@ -1,12 +1,17 @@
-# Compiled programs
-vector_O0
-vector_O2
-vector_O3
-vectorized
+# Compiled programs and temporary outputs in the repository root
+/vector_O0
+/vector_O2
+/vector_O3
+/vectorized
+/a.out
 
-# Compiler output and temporary files
+# Keep the checked-in assembly evidence while ignoring other generated assembly.
 *.s
+!results/vectorization.s
+
+# Object files and other temporary compiler output
 *.o
 *.out
+*.tmp
 *~
 .DS_Store
