@@ -1,6 +1,6 @@
 # Student-Created Presentation Materials
 
-Save the slides you create for COMP 211 Checkoff 3 in this folder. No slides have been generated for you.
+The completed presentation is [`presentation.pdf`](presentation.pdf) (11 slides). These are the slides I created for COMP 211 Checkoff 3.
 
 ## Suggested 5–7 Minute Outline
 
