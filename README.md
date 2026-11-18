@@ -54,17 +54,27 @@ chmod +x benchmark.sh
 ./benchmark.sh
 ```
 
-The script compiles and runs the program at each optimization level; the shell's `time` output reports elapsed time (along with CPU time information). These measurements include program startup and allocation, and are intended as a simple demonstration, not a precise benchmark. Times vary with the CPU, compiler, operating system, and system activity. `-O3` is not guaranteed to be faster than `-O2`.
+The script compiles and runs the program at each optimization level; the shell's `time` output reports elapsed time (along with CPU time information). The measured time is for the complete program. It includes memory allocation, array initialization, array addition, correctness checking, and memory cleanup, so it does not isolate the vectorized loop by itself. This is a simple demonstration, not a precise benchmark. Times vary with the CPU, compiler, operating system, and system activity.
+
+### Why `-O3` Is Not Always Faster Than `-O2`
+
+More aggressive optimization does not guarantee better performance. It can create larger code that affects the CPU's instruction cache, and memory bandwidth can become the bottleneck. The result depends on the hardware, compiler, and workload.
 
 ## Checking Whether Vectorization Happened
 
-Ask GCC for a report about loops it optimized:
+Ask GNU GCC for a report about loops it optimized:
 
 ```bash
 gcc -O3 -fopt-info-vec-optimized vectorization.c -o vectorized
 ```
 
-This report option is specific to GCC. For example, Apple Clang may reject it even when launched with the command name `gcc`; install/use GNU GCC if you want this exact report.
+This report option is specific to GNU GCC. For example, Apple Clang may reject it even when launched with the command name `gcc`; install/use GNU GCC if you want this exact report. Check which compiler the command invokes with:
+
+```bash
+gcc --version
+```
+
+On macOS, `gcc` may invoke Apple Clang rather than GNU GCC. If you use Homebrew to install GNU GCC, its command is usually versioned (for example, `gcc-<version>`). Use that command in place of `gcc` for the report and assembly commands below. You do not need GNU GCC to compile and run this basic C program or use the benchmark script; Apple Clang can do those jobs too.
 
 GCC may print a message identifying a loop it vectorized. That means the compiler found it could process multiple loop elements together. Output depends on the GCC version, target, and machine; no particular report is guaranteed.
 
@@ -77,6 +87,44 @@ gcc -O3 -S -march=native vectorization.c -o vectorization.s
 Open `vectorization.s` and look for vector instructions/registers. The spelling varies by architecture and instruction set. `-march=native` asks GCC to use features available on the current machine, so the resulting program may not run on an older or different CPU. Without `-march=native`, GCC may target a more general instruction set.
 
 Optimization levels tell GCC how aggressively to apply transformations. `-O0` disables most optimization, while `-O2` and `-O3` enable progressively broader optimization choices. Optimization does not guarantee vectorization: dependencies between loop iterations, uncertain memory overlap, unsupported operations, target settings, or compiler decisions may prevent it.
+
+### Experimental Evidence: Did GCC Actually Vectorize the Loop?
+
+I used GCC's vectorization report to check whether it transformed the array-addition loop into SIMD operations. This is the command:
+
+```bash
+gcc -O3 -fopt-info-vec-optimized vectorization.c -o vectorized
+```
+
+The following is an **observed result from the test environment**, not a guaranteed result on every machine:
+
+```text
+vectorization.c:6:23: optimized:
+loop vectorized using 16 byte vectors
+
+vectorization.c:6:23: optimized:
+loop versioned for vectorization because of possible aliasing
+
+vectorization.c:6:23: optimized:
+loop vectorized using 8 byte vectors
+```
+
+In simple terms, a 16-byte vector is 128 bits wide, and an 8-byte vector is 64 bits wide. Each `float` uses 4 bytes, so those vectors can hold four floats and two floats, respectively. GCC also created a versioned loop: it can choose a safe loop path when the input and output arrays might overlap in memory (aliasing). This report is evidence that GCC actually vectorized the loop in that test environment, rather than only being given an optimization flag. Different machines, GCC versions, and target settings can produce different reports and instructions.
+
+### My Experimental Results
+
+Fill in the environment details and measured times after running the experiment on your Mac.
+
+| Optimization Level | Execution Time | Correct Output? |
+| ------------------ | -------------- | --------------- |
+| -O0                | To be measured | Yes/No          |
+| -O2                | To be measured | Yes/No          |
+| -O3                | To be measured | Yes/No          |
+
+- Operating system: To be filled in
+- CPU model: To be filled in
+- GCC version: To be filled in
+- Date of experiment: To be filled in
 
 ## What I Learned
 
