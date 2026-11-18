@@ -143,7 +143,7 @@ I will create my own slides in [`presentation/`](presentation/). The folder's RE
 
 ## AI Exploration Reflection
 
-The written reflection is in [`AI_REFLECTION.md`](AI_REFLECTION.md). It describes how I explored vectorization with AI and includes three representative prompts from this conversation. The conversation permalink is left as a placeholder because I do not have one to add.
+The written reflection is in [`AI_REFLECTION.md`](AI_REFLECTION.md). It describes how I explored vectorization with AI, includes three representative prompts, and links to the conversation.
 
 ## References
 

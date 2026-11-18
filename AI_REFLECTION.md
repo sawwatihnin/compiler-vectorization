@@ -16,6 +16,4 @@ These are examples of prompts I used while exploring the topic:
 
 ## Conversation Permalink
 
-Add the permalink to this conversation here if one is available.
-
-_Paste the conversation permalink here._
+https://chatgpt.com/s/cx_6afdcafb950c8191b75bde799b6a7d18
